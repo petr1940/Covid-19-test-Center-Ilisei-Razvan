@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>List Users</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<body>
+<div class="container text-center">
+  <div>
+    <form th:action="@{/logout}" method="post">
+      <p>
+        Welcome <b> <span sec:authentication="principal.name">name</span></b>
+      </p>
+      <input type="submit" value="Sign Out" />
+    </form>
+  </div>
+  <div>
+    <h1>List of Users</h1>
+  </div>
+
+  <div>
+
+    <form th:action="@{/users}">
+      Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" />
+
+      <input type="submit" value="Search" />
+
+    </form>
+    <table class="table">
+      <thead class="thead-dark">
+      <tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>CPR number</th>
+        <th>Phone number</th>
+        <th>E-mail</th>
+        <th>Actions</th>
+
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user: ${listUsers}">
+        <td th:text="${user.id}">User ID</td>
+        <td th:text="${user.name}">name</td>
+        <td th:text="${user.CPR}">CPR number</td>
+        <td th:text="${user.phoneNumber}">phone number</td>
+        <td th:text="${user.email}">E-mail</td>
+        <td>
+          <a th:href="@{'/editUser/' + ${user.id}}">Edit</a>
+          &nbsp;&nbsp;&nbsp;
+          <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/deleteUser/' + ${user.id}}">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p class="text-center"><a th:href="@{/}">Home</a></p>
+<span sec:authentication="principal.id">ID</span>
+
+
+</body>
+
+</html>

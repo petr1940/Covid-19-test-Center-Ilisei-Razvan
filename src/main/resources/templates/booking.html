@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
+  <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
+  <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+  <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+  <meta charset="ISO-8859-1">
+  <title>booking Registration</title>
+</head>
+<body>
+<div class="container text-center">
+  <div>
+    <form th:action="@{/logout}" method="post">
+
+      <input type="submit" value="Sign Out" />
+    </form>
+  </div>
+
+<div align="center">
+  <h1>Book Appointment</h1>
+  <form action="#" th:action="@{/process_Booking}" method="post" th:object="${booking}" >
+    <label>Full name:</label>
+    <input type="text" th:field="*{name}" required /><br/>
+
+
+    <label>Type of test:</label>
+    <input type="radio" th:field="*{type}" value="PCR" />PCR
+    <input type="radio" th:field="*{type}" value="Quick test" />Quick test<br/>
+
+
+
+    <label>Date Time: </label><input type="datetime-local" th:field="*{appointmentDate}" required/>
+
+
+    <button type="submit">Register</button>
+
+  </form>
+</div>
+<p class="text-center"><a th:href="@{/}">Home</a></p>
+
+</body>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+
+<script>
+  $('input-group.date').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  });
+</script>
+</html>

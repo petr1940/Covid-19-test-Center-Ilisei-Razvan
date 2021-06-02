@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8"/>
+  <title>Booking Manager</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+<body>
+<!-- ADMIN TABLE -->
+<div sec:authorize="hasRole('ROLE_ADMIN')" align="center">
+  <h1>booking List</h1>
+  <br/><br/>
+  <form  th:action="@{/bookingList}">
+    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" />
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+  </form>
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="booking : ${listBookings}">
+      <td th:text="${booking.id}">Booking ID</td>
+      <td th:text="${booking.name}">Name</td>
+      <td th:text="${booking.type}">Type of test</td>
+      <td th:text="${booking.appointmentDate}">appointment date</td>
+      <td>
+        <a th:href="@{'/edit/' + ${booking.id}}">Edit</a>
+        &nbsp;&nbsp;&nbsp;
+        <a th:href="@{'/delete/' + ${booking.id}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- secretary TABLE -->
+<div sec:authorize="hasRole('ROLE_SECRETARY')" align="center">
+  <h1>booking List</h1>
+  <br/><br/>
+  <form  th:action="@{/bookingList}">
+    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" />
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+  </form>
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="booking : ${listBookings}">
+      <td th:text="${booking.id}">Booking ID</td>
+      <td th:text="${booking.name}">Name</td>
+      <td th:text="${booking.type}">Type of test</td>
+      <td th:text="${booking.appointmentDate}">appointment date</td>
+      <td>
+        <a th:href="@{'/edit/' + ${booking.id}}">Edit</a>
+        &nbsp;&nbsp;&nbsp;
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!-- USER TABLE -->
+
+<div      align="center"
+        sec:authorize="hasRole('ROLE_USER')">
+
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="booking : ${listBookings}" th:if="${booking.name} == ${currentUser.name}" >
+      <td th:text="${booking.id}">Booking ID</td>
+      <td th:text="${booking.name}">Name</td>
+      <td th:text="${booking.type}">Type of test</td>
+      <td th:text="${booking.appointmentDate}">appointment date</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="text-center"><a th:href="@{/}">Home</a></p>
+
+</body>
+</html>
